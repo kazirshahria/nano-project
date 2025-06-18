@@ -10,18 +10,23 @@ class PrizePicks():
         '''
         Fetches for the current props displayed on Prizepicks on any given league.
         
-        To search other leagues, please refer to the GitHub file [here](#https://github.com/mada949/PrizePicks-API/blob/main/all_leagues.csv)
+        To search other leagues, please refer to the GitHub file 
+        [here](#https://github.com/kazirshahria/nano-project/tree/master/data/leagues.csv).
+        The file has the unique id's for leagues that Prizepicks supports on their platform.
         
         
         ---
 
         ## Parameters:
-            league (str): The unique identifier for a league on PrizePicks.
+            **league**: *str*
+            The unique identifier for a league on PrizePicks. Default is set to 265.
 
         ## Returns:
-            props (list): A list of dictionaries, each containing details about a PrizePicks player prop line.        
+            **props**: *list* 
+            A list of dictionaries, each containing details about a PrizePicks player prop line.        
         '''
         response: dict = json_response(f'https://partner-api.prizepicks.com/projections?league_id={league}')
+
 
         player_mapper = {}
         import numpy as np
