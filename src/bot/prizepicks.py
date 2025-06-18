@@ -1,48 +1,49 @@
 from .utils.bot_utils import json_response
 from datetime import datetime
 
+
 class PrizePicks():
 
     def __init__(self):
         ...
 
-    def current_props(self, league: str='265') -> list:
+    def current_props(self, league: str = '265') -> list:
         '''
-        Fetches for the current props displayed on Prizepicks on any given league.
-        
-        To search other leagues, please refer to the GitHub file 
+        Fetches for the current props displayed on Prizepicks on any given
+        league.
+
+        To search other leagues, please refer to the GitHub file
         [here](#https://github.com/kazirshahria/nano-project/tree/master/data/leagues.csv).
-        The file has the unique id's for leagues that Prizepicks supports on their platform.
-        
-        
+        The file has the unique id's for leagues that Prizepicks supports on
+        their platform.
+
         ---
 
         ## Parameters:
             **league**: *str*
-            The unique identifier for a league on PrizePicks. Default is set to 265.
+            The unique identifier for a league on PrizePicks.
 
         ## Returns:
-            **props**: *list* 
-            A list of dictionaries, each containing details about a PrizePicks player prop line.        
+            **props**: *list*
+            A list of dictionaries, each containing details about a line.
         '''
-        response: dict = json_response(f'https://partner-api.prizepicks.com/projections?league_id={league}')
-
+        url = f'https://partner-api.prizepicks.com/\
+                projections?league_id={league}'
+        response: dict = json_response(url)
 
         player_mapper = {}
-        import numpy as np
-        np.random.binomial()
         players = response.get('included')
-        
+
         if players is None:
             return []
-        
+
         for player in players:
-            if player['type']=='new_player':
+            if player['type'] == 'new_player':
                 id = player.get('id')
                 name = player['attributes']['display_name'].strip()
                 team = player['attributes']['team'].strip()
-                team_id = player['relationships']['team_data']['data']['id'].strip()
-                
+                team_id = player['relationships']['team_data']['data']['id']\
+                    .strip()
                 if id not in player_mapper.keys():
                     player_mapper[id] = {
                         'Name': name,
@@ -57,7 +58,10 @@ class PrizePicks():
         line: dict
         for line in lines:
             line_id = line['id']
-            opp = line['attributes']['description'].replace('MAPS', 'MAP').replace('MAP', 'MAPS').split('MAPS')[0]
+
+            opp = line['attributes']['description'].replace('MAPS', 'MAP')\
+                .replace('MAP', 'MAPS').split('MAPS')[0]
+
             date = datetime.fromisoformat(line['attributes']['start_time'])
             player_id = line['relationships']['new_player']['data']['id']
             line_score = line['attributes']['line_score']
@@ -68,7 +72,7 @@ class PrizePicks():
             team = player_info.get('Team')
             player_id = player_info.get('Player ID')
             team_id = player_info.get('Team ID')
-            
+
             prop_list.append(
                 {
                     'ID': line_id,
@@ -83,6 +87,5 @@ class PrizePicks():
                     'Team ID': team_id,
                 }
             )
-        
-        return prop_list
 
+        return prop_list
