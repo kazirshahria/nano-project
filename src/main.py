@@ -1,3 +1,5 @@
-from bot import prizepicks
+from bot.prizepicks import PrizePicks
 
-print(prizepicks)
+prizepicks = PrizePicks()
+props = prizepicks.current_props()
+print(props)
