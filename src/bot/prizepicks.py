@@ -9,13 +9,10 @@ class PrizePicks():
 
     def current_props(self, league: str = '265') -> list:
         '''
-        Fetches for the current props displayed on Prizepicks on any given
-        league.
+        Fetches for the current props displayed on Prizepicks on any given league.
 
-        To search other leagues, please refer to the GitHub file
-        [here](#https://github.com/kazirshahria/nano-project/tree/master/data/leagues.csv).
-        The file has the unique id's for leagues that Prizepicks supports on
-        their platform.
+        To search other leagues, please refer to the GitHub file [here](#https://github.com/kazirshahria/nano-project/tree/master/data/leagues.csv).
+        The file has the unique id's for leagues that Prizepicks supports on their platform.
 
         ---
 
@@ -27,8 +24,7 @@ class PrizePicks():
             **props**: *list*
             A list of dictionaries, each containing details about a line.
         '''
-        url = f'https://partner-api.prizepicks.com/\
-                projections?league_id={league}'
+        url = f'https://partner-api.prizepicks.com/projections?league_id={league}'
         response: dict = json_response(url)
 
         player_mapper = {}
@@ -42,8 +38,7 @@ class PrizePicks():
                 id = player.get('id')
                 name = player['attributes']['display_name'].strip()
                 team = player['attributes']['team'].strip()
-                team_id = player['relationships']['team_data']['data']['id']\
-                    .strip()
+                team_id = player['relationships']['team_data']['data']['id'].strip()
                 if id not in player_mapper.keys():
                     player_mapper[id] = {
                         'Name': name,
