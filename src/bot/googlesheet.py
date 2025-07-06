@@ -12,5 +12,7 @@ class GoogleSheet(object):
         return self.client.get_worksheet_by_id(id=id)
     
     def update_worksheet(self, worksheet, df: pd.DataFrame):
+        df.fillna('', inplace=True)
         df = df.astype(str)
+        worksheet.clear()
         return worksheet.update([df.columns.values.tolist()] + df.values.tolist(), value_input_option="USER_ENTERED")
