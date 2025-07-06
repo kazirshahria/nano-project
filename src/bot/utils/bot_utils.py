@@ -1,11 +1,14 @@
+import json
 import requests
 
 
-def json_response(url: str):
+def json_response(url: str, headers = None):
     response = requests.request(
         method='GET',
-        url=url
+        url=url,
+        headers=headers
     )
-
+    content = response.content
+    
     if response.status_code == 200:
-        return response.json()
+        return json.loads(content)
