@@ -1,6 +1,8 @@
 from .utils.bot_utils import json_response
+from .database import Database
+from thefuzz import process
 from datetime import datetime
-
+from pandas import DataFrame
 
 class PrizePicks():
 
@@ -74,8 +76,8 @@ class PrizePicks():
                     'Game Date': date.date(),
                     'Game Time': date.time(),
                     'Type': stat_type.replace('MAP 3', 'MAPS 3'),
-                    'Name': name.strip(),
-                    'Team': team.strip(),
+                    'Player Name': name.strip(),
+                    'Player Team': team.strip(),
                     'Opp': opp.strip(),
                     'Line Score': line_score,
                     'Player ID': player_id,

@@ -1,6 +1,7 @@
 from .utils.bot_utils import json_response
 from datetime import datetime
-
+from pandas import DataFrame
+from thefuzz import process
 
 class UnderDog(object):
 
@@ -91,7 +92,7 @@ class UnderDog(object):
                             "ID": line_id,
                             "Game Date": scheduled_at.date(),
                             "Game Time": scheduled_at.time(),
-                            "Stat Type": stat_type,
+                            "Type": stat_type,
                             "Player Name": pl_name,
                             "Player Team": pl_tm_name,
                             "Opp": opp,
@@ -107,3 +108,6 @@ class UnderDog(object):
                         })
 
         return data
+    
+    
+    
