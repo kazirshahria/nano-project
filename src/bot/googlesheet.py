@@ -5,8 +5,8 @@ import numpy as np
 
 class GoogleSheet(object):
     
-    def __init__(self, sheet_url: str = os.environ['GSHEET_URL']):
-        service_account_login = service_account(filename='google_credentials.json')
+    def __init__(self, sheet_url: str = os.environ['GSHEET_URL'], file_path: str = 'google_credentials.json'):
+        service_account_login = service_account(filename=file_path)
         self.client = service_account_login.open_by_url(sheet_url)
     
     def worksheet_instance(self, id: str = '635725027'):
